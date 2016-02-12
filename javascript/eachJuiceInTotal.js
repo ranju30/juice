@@ -1,29 +1,36 @@
 var visulizeIt = function(data){
- var colors = ['#F42F98', "#50f4FF", "#9B2DFF", "#FFFDDE", "#FF877E", "#1F05FF", "#26FF4F", "#128128", "#812574", "#561134", "#243754", "#266219", "#446554", "#251399", "#227186", "#542625", "#530176", "#87941", "#695397", "#396707", "#371830", "#725629", "#479539", "#972173", "#161016", "#369194", "#203283", "#571481", "#927284", "#fff136", "#807413", "#170631", "#750094", "#697640"].slice(0,31).reverse()
+ var colors = ['#F42F98', "#50f4FF", "#9B2DFF", "#FFFDDE", "#FF877E", "#1F05FF", "#26FF4F", "#128128", "#812574", "#561134", "#243754", "#266219", "#446554", "#251399", "#227186", "#542625", "#530176", "#87941", "#695397", "#396707", "#371830", "#725629", "#479539", "#972173", "#161016", "#369194", "#203283", "#571481", "#927284", "#fff136", "#807413", "#170631", "#750094", "#697640"].slice(0,31).reverse();
  var yScale = d3.scale.linear()
    .range([600, 0])
-   .domain([0, 7000])
+   .domain([0, 7000]);
+
  var xScale = d3.scale.ordinal()
-   .rangeRoundBands([0, 800])
+   .rangeRoundBands([0, 800]);
+
  var xAxis = d3.svg.axis()
    .scale(xScale)
    .orient('bottom');
+
  var yAxis = d3.svg.axis()
    .scale(yScale)
    .orient('left');
+
  var svg = d3.select('#bar').append('svg') 
    .attr('width',1000)
-   .attr('height',1000)
+   .attr('height',1000);
+
  var tip = d3.tip()
      .attr('class', 'd3-tip')
     .offset([-10, 0])
      .html(function(d) {
       return "<strong>Quantity:</strong> <span style='color:red'>" + d.values + "</span>";
  });
+
  svg.selectAll('g').data(data).enter()
    .append('rect')
      .attr('x', function(d, i){return i * 25+70})
      .attr('y', function(d, i){return yScale(d.values) + 10})
+     // .attr('fill', 'steelblue')
      .attr('fill', function(d, i){return colors[i]})
      .attr('width', 18)
      .attr('height', function(d, i){return 600 - yScale(d.values)})
